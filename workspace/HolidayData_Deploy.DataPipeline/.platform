@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "HolidayData_Deploy"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ceb83416-7795-9155-4b33-fb04ce6f2fad"
+  }
+}

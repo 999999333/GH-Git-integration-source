@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Adventure Works DW 2020",
+    "description": "AdventureWorksDW Semantic Model example"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e27026f4-f028-4093-96ab-e6c44fcf351e"
+  }
+}

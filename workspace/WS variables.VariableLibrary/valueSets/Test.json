@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/valueSet/1.0.0/schema.json",
+  "name": "Test",
+  "variableOverrides": [
+    {
+      "name": "Destination_LH",
+      "value": "73fc4e1e-c4d2-4334-ab4e-e763abad870e"
+    },
+    {
+      "name": "Destination_WSID",
+      "value": "ae0f43eb-d2b2-4014-870e-59b5742062db"
+    },
+    {
+      "name": "DestinationTable_Name",
+      "value": "testholidaydata"
+    }
+  ]
+}

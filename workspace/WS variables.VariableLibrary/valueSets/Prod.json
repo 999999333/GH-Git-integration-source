@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/valueSet/1.0.0/schema.json",
+  "name": "Prod",
+  "variableOverrides": [
+    {
+      "name": "DestinationTable_Name",
+      "value": "prodholidaydata"
+    },
+    {
+      "name": "Destination_LH",
+      "value": "2e6f2de8-9131-455d-8ffe-ae2194ce4307"
+    },
+    {
+      "name": "Destination_WSID",
+      "value": "274dc2a1-5acb-45c7-ac83-d01dc032f0ea"
+    },
+    {
+      "name": "Source_WSID",
+      "value": "66cbe87c-21fd-4d23-a0c6-ab3bf333ce3a"
+    },
+    {
+      "name": "Source_LH",
+      "value": "ecf2a93d-4db3-41b2-a061-fe784dc5a8ba"
+    }
+  ]
+}

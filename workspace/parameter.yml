@@ -1,0 +1,63 @@
+# find_replace examples
+find_replace:
+    # Replace Power BI Text
+    - find_value: "This version is based on the dev database."
+      replace_value:
+        Test: "This version is based on the test database."
+        Prod: "This version is based on the prod database."
+
+    - find_value: "AdventureWorksDWDev"
+      replace_value:
+        Test: "AdventureWorksDWTest"
+        Prod: "AdventureWorksDWProd"
+
+    # Uncomment below
+    # lakehouse GUID to be replaced (using regex pattern)
+    - find_value: \#\s*META\s+"default_lakehouse":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      replace_value:
+        Test: "$items.Lakehouse.WithoutSchema.id" # TEST lakehouse GUID (dynamic)
+        Prod: "$items.Lakehouse.WithoutSchema.id" # PROD lakehouse GUID (dynamic)
+      is_regex: "true"
+      item_type: "Notebook" # filter on notebook files
+      item_name: ["Hello World"] # filter on specific notebook files
+    # lakehouse workspace ID to be replaced (using regex pattern)
+    - find_value: \#\s*META\s+"default_lakehouse_workspace_id":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      replace_value:
+          Test: "$workspace.id" # PPE workspace ID (dynamic)
+          Prod: "$workspace.id" # PROD workspace ID (dynamic)
+      is_regex: "true"
+      file_path: # filter on notebook files with a specific path
+          - "/Hello World.Notebook/notebook-content.py"
+
+semantic_model_binding:
+    models:
+        - semantic_model_name: "Adventure Works DW 2020"
+          connection_id:
+              Test: "0d3f6e91-45e9-4a1a-9808-d50b26819816"
+              Prod: "d398b66b-19ad-40ac-89ff-da81f374db4d"
+
+# key_value_replace examples
+key_value_replace:
+    # Schedule enabled state to be replaced
+    - find_key: $.schedules[?(@.jobType=="Execute")].enabled
+      replace_value:
+          Test: false # disable execution in Test environment
+          Prod: true # enable execution in PROD environment
+      file_path: "**/.schedules" # filter on all .schedules files
+
+# spark_pool:
+#     - instance_pool_id: "72c68dbc-0775-4d59-909d-a47896f4573b" # spark_pool_instance_id to be replaced
+#       replace_value:
+#           PPE:
+#               type: "Capacity" # target spark pool type, only supports Capacity or Workspace
+#               name: "CapacityPool_Medium" # target spark pool name
+#           PROD:
+#               type: "Capacity" # target spark pool type, only supports Capacity or Workspace
+#               name: "CapacityPool_Large" # target spark pool name
+#       item_name: "World" # filter on environment file for environment named "World"
+#     - instance_pool_id: "e7b8f1c4-4a6e-4b8b-9b2e-8f1e5d6a9c3d" # spark_pool_instance_id to be replaced
+#       replace_value:
+#           PPE:
+#               type: "Workspace" # target spark pool type, only supports Capacity or Workspace
+#               name: "WorkspacePool_Medium" # target spark pool name
+#       item_name: ["World_1", "World_2", "World_3"] # filter on environment files for environments with these names

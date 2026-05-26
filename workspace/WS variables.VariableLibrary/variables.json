@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "Source_LH",
+      "note": "",
+      "type": "String",
+      "value": "ecf2a93d-4db3-41b2-a061-fe784dc5a8ba"
+    },
+    {
+      "name": "Source_WSID",
+      "note": "",
+      "type": "String",
+      "value": "66cbe87c-21fd-4d23-a0c6-ab3bf333ce3a"
+    },
+    {
+      "name": "Destination_LH",
+      "note": "",
+      "type": "String",
+      "value": "d5002b3f-9e0c-4bea-a0ed-9c6a67500f24"
+    },
+    {
+      "name": "Destination_WSID",
+      "note": "",
+      "type": "String",
+      "value": "9ff8365a-dc53-41a4-a3eb-38ea65dca477"
+    },
+    {
+      "name": "SourceTable_Name",
+      "note": "",
+      "type": "String",
+      "value": "holidaydata"
+    },
+    {
+      "name": "DestinationTable_Name",
+      "note": "",
+      "type": "String",
+      "value": "devholidaydata"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Copy Data",
+        "type": "Copy",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "LakehouseTableSource",
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "a734f87d_1069_434c_ac7b_e57bc711e785",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "@pipeline().libraryVariables.WSvariables_Source_WSID",
+                    "artifactId": "@pipeline().libraryVariables.WSvariables_Source_LH",
+                    "rootFolder": "Tables"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "table": {
+                  "value": "@pipeline().libraryVariables.WSvariables_SourceTable_Name",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "sink": {
+            "type": "LakehouseTableSink",
+            "tableActionOption": "Append",
+            "partitionOption": "None",
+            "applyVOrder": true,
+            "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "4d3d5209_d73d_469f_b32d_0f4a054f0397",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "@pipeline().libraryVariables.WSvariables_Destination_WSID",
+                    "artifactId": "@pipeline().libraryVariables.WSvariables_Destination_LH",
+                    "rootFolder": "Tables"
+                  }
+                }
+              },
+              "type": "LakehouseTable",
+              "schema": [],
+              "typeProperties": {
+                "table": {
+                  "value": "@pipeline().libraryVariables.WSvariables_DestinationTable_Name",
+                  "type": "Expression"
+                }
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      }
+    ],
+    "libraryVariables": {
+      "WSvariables_Source_LH": {
+        "type": "String",
+        "variableName": "Source_LH",
+        "libraryName": "WS variables"
+      },
+      "WSvariables_Source_WSID": {
+        "type": "String",
+        "variableName": "Source_WSID",
+        "libraryName": "WS variables"
+      },
+      "WSvariables_Destination_LH": {
+        "type": "String",
+        "variableName": "Destination_LH",
+        "libraryName": "WS variables"
+      },
+      "WSvariables_Destination_WSID": {
+        "type": "String",
+        "variableName": "Destination_WSID",
+        "libraryName": "WS variables"
+      },
+      "WSvariables_SourceTable_Name": {
+        "type": "String",
+        "variableName": "SourceTable_Name",
+        "libraryName": "WS variables"
+      },
+      "WSvariables_DestinationTable_Name": {
+        "type": "String",
+        "variableName": "DestinationTable_Name",
+        "libraryName": "WS variables"
+      }
+    }
+  }
+}
