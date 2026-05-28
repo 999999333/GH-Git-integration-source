@@ -32,10 +32,14 @@ jobs:
         run: |
           fab --version
 
-      - name: Configure Fabric CLI for CI
+      - name: Configure Fabric CLI for Secrets in CI Environment
         run: |
           fab config set encryption_fallback_enabled true
       
+      - name: Configure default capacity for Fabric CLI
+        run: |
+          fab config set default_capacity 'Trial-20260528T115331Z-Cqa8ZJ8YL0yRXYMkueDxXw.Capacity'
+
       - name: Fabric CLI Login with Service Principal
         run: |
           fab auth login --u '${{ secrets.FABRIC_CLIENT_ID }}' \
@@ -57,4 +61,4 @@ jobs:
       
       - name: Verify Workspace Creation
         run: |
-          fab workspace get "$WORKSPACE_NAME"
+          fab get "$WORKSPACE_NAME"
