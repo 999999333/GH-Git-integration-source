@@ -40,16 +40,23 @@ jobs:
       
       - name: Create Fabric Workspace
         run: |
-          if fab exists "$WORKSPACE_NAME.Workspace" > /dev/null 2>&1; then
+          if fab exists "$WORKSPACE_NAME" > /dev/null 2>&1; then
             echo "Workspace already exists: $WORKSPACE_NAME"
           else
-            fab mkdir "$WORKSPACE_NAME.Workspace"
+            fab mkdir "$WORKSPACE_NAME"
+          fi
+
+      - name: Validate Required Secrets
+        run: |
+          if [ -z "${{ secrets.FABRIC_PRINCIPAL_OBJECT_ID }}" ]; then
+            echo "Missing required secret: FABRIC_PRINCIPAL_OBJECT_ID"
+            exit 1
           fi
       
       - name: Set Workspace Permissions
         run: |
-          fab acl set "$WORKSPACE_NAME.Workspace" -I '${{ secrets.FABRIC_PRINCIPAL_OBJECT_ID }}' -R contributor
+          fab acl set "$WORKSPACE_NAME" -I '${{ secrets.FABRIC_PRINCIPAL_OBJECT_ID }}' -R contributor
       
       - name: Verify Workspace Creation
         run: |
-          fab exists "$WORKSPACE_NAME.Workspace"
+          fab exists "$WORKSPACE_NAME"
