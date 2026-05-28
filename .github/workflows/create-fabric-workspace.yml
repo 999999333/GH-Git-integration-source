@@ -36,9 +36,6 @@ jobs:
         run: |
           fab config set encryption_fallback_enabled true
       
-      - name: Configure default capacity for Fabric CLI
-        run: |
-          fab config set default_capacity 'Trial-20260528T115331Z-Cqa8ZJ8YL0yRXYMkueDxXw.Capacity'
 
       - name: Fabric CLI Login with Service Principal
         run: |
@@ -46,6 +43,10 @@ jobs:
                          --p '${{ secrets.FABRIC_CLIENT_SECRET }}' \
                          --tenant '${{ secrets.FABRIC_TENANT_ID }}'
       
+      - name: Configure default capacity for Fabric CLI
+        run: |
+          fab config set default_capacity 'Trial-20260528T115331Z-Cqa8ZJ8YL0yRXYMkueDxXw.Capacity'
+     
       - name: Create Fabric Workspace
         run: |
           if fab exists "$WORKSPACE_NAME.Workspace" > /dev/null 2>&1; then
