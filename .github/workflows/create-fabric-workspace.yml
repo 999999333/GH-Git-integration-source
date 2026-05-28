@@ -27,6 +27,10 @@ jobs:
       - name: Verify Fabric CLI
         run: |
           fab --version
+
+      - name: Configure Fabric CLI for CI
+        run: |
+          fab config set encryption_fallback_enabled true
       
       - name: Fabric CLI Login with Service Principal
         run: |
