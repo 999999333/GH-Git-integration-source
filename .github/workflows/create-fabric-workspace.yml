@@ -62,4 +62,4 @@ jobs:
       
       - name: Verify Workspace Creation
         run: |
-          fab get "$WORKSPACE_NAME"
+          fab get "$WORKSPACE_NAME.Workspace"
