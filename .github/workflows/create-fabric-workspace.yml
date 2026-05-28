@@ -2,6 +2,12 @@ name: Create Fabric Workspace
 on:
   workflow_dispatch:
 
+
+env:
+  WORKSPACE_NAME: WS-fabricUser-03-test
+
+
+
 jobs:
   create_workspace:
     runs-on: ubuntu-latest
@@ -15,26 +21,40 @@ jobs:
         with:
           python-version: '3.13'
       
+
       - name: Install Fabric CLI
         run: |
-          pip install fabric-cli
+          python -m pip install --upgrade pip
+          python -m pip install ms-fabric-cli
+          python -c "import sysconfig; print(sysconfig.get_path('scripts'))" >> $GITHUB_PATH
+
+      - name: Verify Fabric CLI
+        run: |
+          fab --version
+
+      - name: Configure Fabric CLI for CI
+        run: |
+          fab config set encryption_fallback_enabled true
       
       - name: Fabric CLI Login with Service Principal
         run: |
           fab auth login --u '${{ secrets.FABRIC_CLIENT_ID }}' \
-                       --p '${{ secrets.FABRIC_CLIENT_SECRET }}' \
-                       --tenant '${{ secrets.FABRIC_TENANT_ID }}'
+                         --p '${{ secrets.FABRIC_CLIENT_SECRET }}' \
+                         --tenant '${{ secrets.FABRIC_TENANT_ID }}'
       
       - name: Create Fabric Workspace
         run: |
-          fab create WS-fabricUser-03-test.workspace -P capacityname=Trial-20260503T145508Z-co7Z-B3zWk21IzySNnbZBA
-        env:
-          FABRIC_USER_ID: ${{ secrets.FABRIC_CLIENT_ID }}
-      
+          if fab exists "$WORKSPACE_NAME.Workspace" > /dev/null 2>&1; then
+            echo "Workspace already exists: $WORKSPACE_NAME"
+          else
+            fab mkdir "$WORKSPACE_NAME.Workspace"
+          fi
+
+
       - name: Set Workspace Permissions
         run: |
-          fab acl set WS-fabricUser-03-test.Workspace -I 7598817c-573e-41c2-8359-094c935e307f -R contributor
+          fab acl set "$WORKSPACE_NAME.Workspace" -I 7598817c-573e-41c2-8359-094c935e307f -R contributor
       
       - name: Verify Workspace Creation
         run: |
-          fab workspace get 'WS-fabricUser-03-test'
+          fab workspace get "$WORKSPACE_NAME"
