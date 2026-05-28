@@ -40,10 +40,10 @@ jobs:
       
       - name: Create Fabric Workspace
         run: |
-          if fab workspace get "$WORKSPACE_NAME" > /dev/null 2>&1; then
+          if fab exists "$WORKSPACE_NAME.Workspace" > /dev/null 2>&1; then
             echo "Workspace already exists: $WORKSPACE_NAME"
           else
-            fab workspace create "$WORKSPACE_NAME"
+            fab mkdir "$WORKSPACE_NAME.Workspace"
           fi
       
       - name: Set Workspace Permissions
@@ -52,4 +52,4 @@ jobs:
       
       - name: Verify Workspace Creation
         run: |
-          fab workspace get "$WORKSPACE_NAME"
+          fab exists "$WORKSPACE_NAME.Workspace"
