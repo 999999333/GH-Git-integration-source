@@ -2,6 +2,9 @@ name: Create Fabric Workspace
 on:
   workflow_dispatch:
 
+env:
+  WORKSPACE_NAME: WS-fabricUser-03-test
+
 jobs:
   create_workspace:
     runs-on: ubuntu-latest
@@ -17,24 +20,31 @@ jobs:
       
       - name: Install Fabric CLI
         run: |
-          pip install fabric-cli
+          python -m pip install --upgrade pip
+          python -m pip install fabric-cli
+
+      - name: Verify Fabric CLI
+        run: |
+          python -m fab --version
       
       - name: Fabric CLI Login with Service Principal
         run: |
-          fab auth login --u '${{ secrets.FABRIC_CLIENT_ID }}' \
-                       --p '${{ secrets.FABRIC_CLIENT_SECRET }}' \
-                       --tenant '${{ secrets.FABRIC_TENANT_ID }}'
+          python -m fab auth login --u '${{ secrets.FABRIC_CLIENT_ID }}' \
+                                  --p '${{ secrets.FABRIC_CLIENT_SECRET }}' \
+                                  --tenant '${{ secrets.FABRIC_TENANT_ID }}'
       
       - name: Create Fabric Workspace
         run: |
-          fab workspace create 'WS-fabricUser-03-test'
-        env:
-          FABRIC_USER_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          if python -m fab workspace get "$WORKSPACE_NAME" > /dev/null 2>&1; then
+            echo "Workspace already exists: $WORKSPACE_NAME"
+          else
+            python -m fab workspace create "$WORKSPACE_NAME"
+          fi
       
       - name: Set Workspace Permissions
         run: |
-          fab acl set ws1.Workspace -I 7598817c-573e-41c2-8359-094c935e307f -R contributor
+          python -m fab acl set "$WORKSPACE_NAME.Workspace" -I '${{ secrets.FABRIC_PRINCIPAL_OBJECT_ID }}' -R contributor
       
       - name: Verify Workspace Creation
         run: |
-          fab workspace get 'WS-fabricUser-03-test'
+          python -m fab workspace get "$WORKSPACE_NAME"
