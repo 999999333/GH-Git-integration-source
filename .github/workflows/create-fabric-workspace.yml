@@ -53,7 +53,7 @@ jobs:
 
       - name: Set Workspace Permissions
         run: |
-          fab acl set "$WORKSPACE_NAME.Workspace" -I 7598817c-573e-41c2-8359-094c935e307f -R contributor
+          fab acl set "$WORKSPACE_NAME" -I 7598817c-573e-41c2-8359-094c935e307f -R contributor
       
       - name: Verify Workspace Creation
         run: |
